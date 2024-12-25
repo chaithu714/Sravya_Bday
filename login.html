@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login to Birthday Countdown</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1> Oye..!!? </h1>
+        <h4> (only privilegaed,Can only enter)</h4>
+        <form id="loginForm">
+            <label for="answer">What is [Name]'s favorite color?</label><br>
+            <input type="text" id="answer" placeholder="Enter your answer"><br>
+            <button type="button" onclick="checkLogin()">Submit</button>
+        </form>
+        <p id="error" class="error"></p>
+    </div>
+    <script>
+        function checkLogin() {
+            const answer = document.getElementById("answer").value.toLowerCase();
+            const error = document.getElementById("error");
+
+            if (answer === "blue") { // Replace "blue" with the correct answer
+                window.location.href = "countdown.html"; // Replace with your second page file name
+            } else {
+                error.textContent = "Incorrect answer. Please try again.";
+            }
+        }
+    </script>
+</body>
+</html>
