@@ -1,16 +1,22 @@
+let playCount = 0;  // Tracks how many times the audio has played
+const maxPlays = 2; // Set the number of times the audio should play
+
 // Countdown Timer Logic
 function updateTimer() {
-    const targetDate = new Date("2025-01-02T03:07:00"); // Replace with the actual date of Sravya's birthday
+    const targetDate = new Date("2025-01-02T03:45:10"); // Adjust to the actual birthday date
     const now = new Date();
     const timeDiff = targetDate - now;
 
     const audioElement = document.getElementById('birthday-audio'); // Get the audio element
 
     if (timeDiff <= 0) {
+        // When the countdown reaches 0, start the audio
         document.getElementById('timer').innerHTML = "It's Your Birthday! 🎂🎉";
-        if (audioElement.paused) {
-            audioElement.play(); // Play the audio once the timer is done
-            toggleAudioButtons(true); // Show the Pause button
+        
+        if (playCount === 0) {
+            // Play the audio for the first time when countdown is over
+            audioElement.play();
+            playCount++;
         }
     } else {
         const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
@@ -24,44 +30,22 @@ function updateTimer() {
 
 setInterval(updateTimer, 1000);
 
-// Toggle Play/Pause buttons based on the audio status
-function toggleAudio() {
-    const audioElement = document.getElementById('birthday-audio');
-    const playButton = document.getElementById('play-btn');
-    const pauseButton = document.getElementById('pause-btn');
+// Listen for when the audio ends to count and handle repeating
+document.getElementById('birthday-audio').addEventListener('ended', function () {
+    playCount++;
 
-    if (audioElement.paused) {
-        audioElement.play();
-        toggleAudioButtons(true); // Show Pause button
+    if (playCount >= maxPlays) {
+        // Stop the audio after maxPlays and reset play count
+        document.getElementById('birthday-audio').pause();
+        playCount = 0; // Reset the play count
     } else {
-        audioElement.pause();
-        toggleAudioButtons(false); // Show Play button
+        // Play again if the count hasn't reached maxPlays
+        document.getElementById('birthday-audio').play();
     }
-}
+});
 
-// Function to show/hide Play and Pause buttons
-function toggleAudioButtons(isPlaying) {
-    const playButton = document.getElementById('play-btn');
-    const pauseButton = document.getElementById('pause-btn');
-
-    if (isPlaying) {
-        playButton.style.display = 'none';
-        pauseButton.style.display = 'inline-block';
-    } else {
-        playButton.style.display = 'inline-block';
-        pauseButton.style.display = 'none';
-    }
-}
-
-// Pause the audio when the pause button is clicked
-function pauseAudio() {
-    const audioElement = document.getElementById('birthday-audio');
-    audioElement.pause();
-    toggleAudioButtons(false); // Show Play button
-}
-
-// Ensure audio is paused when the page loads
-document.addEventListener('DOMContentLoaded', function() {
-    const audioElement = document.getElementById('birthday-audio');
-    audioElement.pause();  // Ensures the audio is paused on initial load
+// Gracefully handle audio errors (e.g., file not found)
+document.getElementById('birthday-audio').addEventListener('error', function () {
+    console.error('Error loading the audio file. Please make sure the path is correct.');
+    alert('Oops! The audio file could not be loaded.');
 });

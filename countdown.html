@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday, My Love! 💖</title>
+    <title>Happy Birthday, Sravya! 💖</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
 <body>
-    <!-- Audio element with no autoplay, to be controlled via buttons -->
-    <audio id="birthday-audio">
+    <audio id="birthday-audio" preload="auto">
         <source src="happy-birthday.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
@@ -30,7 +29,6 @@
             <div class="photos">
                 <img src="photo1.jpg" alt="Memory 1" class="photo">
                 <img src="photo2.jpg" alt="Memory 2" class="photo">
-                <!-- Add more photos if needed -->
             </div>
         </section>
 
@@ -47,12 +45,6 @@
                 <button type="button" onclick="checkAnswer()" class="quiz-button">Submit Answer</button>
             </form>
             <p id="quiz-result" class="quiz-result"></p>
-        </section>
-
-        <!-- Play/Pause controls for audio -->
-        <section id="audio-controls" class="audio-controls">
-            <button id="play-btn" onclick="toggleAudio()" class="play-btn">Play Music</button>
-            <button id="pause-btn" onclick="pauseAudio()" class="pause-btn" style="display:none;">Pause Music</button>
         </section>
     </main>
 
