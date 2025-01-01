@@ -3,43 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Sravya </title>
+    <title>Happy Birthday, My Love! 💖</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <audio autoplay loop>
+    <!-- Audio element with no autoplay, to be controlled via buttons -->
+    <audio id="birthday-audio">
         <source src="happy-birthday.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-    <header>
-        <h1>🎉 Happy Birthday, Sravya! 🎂</h1>
+
+    <header class="header">
+        <h1>🌹 Happy Birthday, Sravya! 🎉</h1>
+        <p class="subtitle">You're the light of my life, today and always. 💕</p>
     </header>
+
     <main>
-        <section id="countdown">
-            <h2>Countdown to Your Special Day:</h2>
-            <div id="timer">Loading...</div>
+        <section id="countdown" class="countdown">
+            <h2>Counting Down to Your Special Day...</h2>
+            <div id="timer" class="timer">Loading...</div>
         </section>
-        <section id="gallery">
-            <h2>Photo Memories</h2>
+
+        <section id="gallery" class="gallery">
+            <h2>Our Beautiful Memories 💖</h2>
             <div class="photos">
-                <!-- Add your images here -->
-                <img src="photo1.jpg" alt="Memory 1">
-                <img src="photo2.jpg" alt="Memory 2">
+                <img src="photo1.jpg" alt="Memory 1" class="photo">
+                <img src="photo2.jpg" alt="Memory 2" class="photo">
+                <!-- Add more photos if needed -->
             </div>
         </section>
-        <section id="quiz">
-            <h2>How Well Do You Know [Name]?</h2>
+
+        <section id="love-note" class="love-note">
+            <h2>Your Love Note ❤️</h2>
+            <p class="note">Every moment with you feels like magic. You make my world brighter, and I’m so grateful for you every single day. Happy Birthday, my love! 💖</p>
+        </section>
+
+        <section id="quiz" class="quiz">
+            <h2>How Well Do You Know Me, My Love? 💌</h2>
             <form>
-                <label>What is [Name]'s favorite color?</label>
-                <input type="text" id="answer" placeholder="Your Answer">
-                <button type="button" onclick="checkAnswer()">Submit</button>
+                <label>What is my favorite thing about you?</label>
+                <input type="text" id="answer" placeholder="Your Answer" class="quiz-input">
+                <button type="button" onclick="checkAnswer()" class="quiz-button">Submit Answer</button>
             </form>
-            <p id="quiz-result"></p>
+            <p id="quiz-result" class="quiz-result"></p>
+        </section>
+
+        <!-- Play/Pause controls for audio -->
+        <section id="audio-controls" class="audio-controls">
+            <button id="play-btn" onclick="toggleAudio()" class="play-btn">Play Music</button>
+            <button id="pause-btn" onclick="pauseAudio()" class="pause-btn" style="display:none;">Pause Music</button>
         </section>
     </main>
-    <footer>
-        <p>Made with ❤️ by Chaitanya </p>
+
+    <footer class="footer">
+        <p>With all my love, Chaitanya 💖</p>
+        <p>Made just for you, my dear Sravya. 🌹</p>
     </footer>
-    <script src="script.js"></script>
 </body>
 </html>
