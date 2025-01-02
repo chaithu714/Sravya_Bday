@@ -1,51 +1,37 @@
-let playCount = 0;  // Tracks how many times the audio has played
-const maxPlays = 2; // Set the number of times the audio should play
+// Function to start countdown and handle the audio
+function startCountdown() {
+    const countdownDate = new Date("January 1, 2025 00:00:00").getTime(); // Set your target date
+    const timerElement = document.getElementById("timer");
 
-// Countdown Timer Logic
-function updateTimer() {
-    const targetDate = new Date("2025-01-02T03:45:10"); // Adjust to the actual birthday date
-    const now = new Date();
-    const timeDiff = targetDate - now;
+    const interval = setInterval(function() {
+        let now = new Date().getTime();
+        let distance = countdownDate - now;
 
-    const audioElement = document.getElementById('birthday-audio'); // Get the audio element
+        let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    if (timeDiff <= 0) {
-        // When the countdown reaches 0, start the audio
-        document.getElementById('timer').innerHTML = "It's Your Birthday! 🎂🎉";
-        
-        if (playCount === 0) {
-            // Play the audio for the first time when countdown is over
-            audioElement.play();
-            playCount++;
+        timerElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+        // If countdown reaches 0, play music and stop the countdown
+        if (distance < 0) {
+            clearInterval(interval);
+            timerElement.innerHTML = "It's Your Day! 🎉";
+            playMusic();
         }
-    } else {
-        const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-
-        document.getElementById('timer').innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }
+    }, 1000);
 }
 
-setInterval(updateTimer, 1000);
+// Function to handle audio play after countdown
+function playMusic() {
+    const audio = document.getElementById("birthday-audio");
+    audio.play().catch((error) => {
+        console.error("Error playing audio: ", error);
+        alert("Sorry, there was an issue with the audio. Please check your browser settings.");
+    });
+}
 
-// Listen for when the audio ends to count and handle repeating
-document.getElementById('birthday-audio').addEventListener('ended', function () {
-    playCount++;
-
-    if (playCount >= maxPlays) {
-        // Stop the audio after maxPlays and reset play count
-        document.getElementById('birthday-audio').pause();
-        playCount = 0; // Reset the play count
-    } else {
-        // Play again if the count hasn't reached maxPlays
-        document.getElementById('birthday-audio').play();
-    }
-});
-
-// Gracefully handle audio errors (e.g., file not found)
-document.getElementById('birthday-audio').addEventListener('error', function () {
-    console.error('Error loading the audio file. Please make sure the path is correct.');
-    alert('Oops! The audio file could not be loaded.');
-});
+window.onload = function() {
+    startCountdown();
+};

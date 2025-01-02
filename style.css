@@ -1,126 +1,130 @@
-/* Basic styles - same as before */
+/* General body styling */
 body {
     font-family: 'Arial', sans-serif;
-    background: #fff9f9;
-    color: #333;
+    background: #fff5f7; /* Light pink background */
     margin: 0;
     padding: 0;
-    background-image: url('birthday-background.png');
-    background-size: 50px 50px;
-    background-repeat: repeat;
-}
-
-header {
     text-align: center;
-    background-color: #f9c0c0;
-    padding: 20px;
-    border-bottom: 3px solid #ff6666;
-}
-
-h1 {
-    font-size: 3em;
-    color: #ff3399;
-}
-
-.subtitle {
-    font-size: 1.5em;
-    color: #ff66b2;
-}
-
-main {
-    padding: 20px;
-    background: white;
-    border-radius: 10px;
-    max-width: 800px;
-    margin: 40px auto;
-    text-align: center;
-}
-
-section {
-    margin-bottom: 30px;
-}
-
-#timer {
-    font-size: 2em;
-    font-weight: bold;
-    color: #ff3399;
-}
-
-footer {
-    background-color: #f9c0c0;
-    text-align: center;
-    padding: 10px;
-    border-top: 3px solid #ff6666;
-    font-size: 1.2em;
     position: relative;
-    bottom: 0;
-    width: 100%;
-    height: 100px;
+    overflow-x: hidden; /* Allow horizontal scrolling to avoid any overflow */
+    overflow-y: scroll; /* Allow vertical scrolling */
 }
 
-footer p {
-    margin: 5px;
+/* Header styling */
+.header {
+    background: #ffccd5;
+    padding: 20px;
+    color: #861657;
+    border-bottom: 4px solid #ff8fa3;
+    z-index: 2;
+    position: relative;
 }
 
-#audio-controls {
-    text-align: center;
+/* Subtitle styling */
+.subtitle {
+    font-style: italic;
+    color: #c7375f;
 }
 
-button {
-    background-color: #ff3399;
-    color: white;
+/* Countdown section */
+.countdown, .love-note {
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 15px;
+    background: #ffe6e9;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 600px;
+    z-index: 2;
+    position: relative;
+}
+
+/* Timer styling */
+.timer {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #861657;
+}
+
+/* Love Note section styling */
+.love-note {
     font-size: 1.2em;
-    padding: 10px 20px;
-    margin: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    color: #861657;
+    line-height: 1.6;
 }
 
-button:hover {
-    background-color: #ff66b2;
-}
-
-button:focus {
-    outline: none;
-}
-
-button:active {
-    background-color: #e60073;
-}
-
-.quiz-input {
+/* Footer styling */
+.footer {
+    background: #ffccd5;
     padding: 10px;
-    font-size: 1em;
-    width: 60%;
+    color: #861657;
+    border-top: 4px solid #ff8fa3;
+    font-size: 0.9em;
+    z-index: 2;
+    position: relative;
 }
 
-.quiz-button {
-    padding: 10px;
-    background-color: #ff3399;
-    border: none;
-    color: white;
-    cursor: pointer;
+/* Balloon and Love Symbols Background Animation */
+@keyframes balloon-float {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-600px); }
 }
 
-.quiz-result {
-    font-size: 1.2em;
-    color: #ff66b2;
+@keyframes love-bubble {
+    0% { opacity: 0; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1.2); }
+    100% { opacity: 0; transform: scale(0.8); }
 }
 
-#play-btn, #pause-btn {
-    display: inline-block;
+/* Adding animated balloons and hearts to the background */
+body::before, body::after {
+    z-index: 1;
+    position: absolute;
+    font-size: 3em;
+    animation: balloon-float 10s infinite ease-in-out;
 }
 
-.photos {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
+/* Extra floating balloons */
+body::before {
+    content: "🎈";
+    top: 10%;
+    left: 20%;
+    animation-duration: 12s;
+    animation-delay: -4s;
 }
 
-.photo {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
+body::after {
+    content: "❤️";
+    bottom: 10%;
+    right: 25%;
+    animation: love-bubble 6s infinite ease-in-out;
+    animation-delay: -2s;
+}
+
+/* Floating Balloons */
+body .balloon {
+    position: absolute;
+    font-size: 4em;
+    animation: balloon-float 12s infinite ease-in-out;
+    z-index: 1;
+}
+
+body .balloon:nth-child(1) { left: 30%; top: 15%; }
+body .balloon:nth-child(2) { left: 40%; top: 40%; }
+body .balloon:nth-child(3) { left: 60%; top: 25%; }
+
+body .heart {
+    position: absolute;
+    font-size: 3em;
+    animation: love-bubble 10s infinite ease-in-out;
+    color: #ff4d94;
+    z-index: 1;
+}
+
+body .heart:nth-child(odd) {
+    animation-delay: -3s;
+}
+
+body .heart:nth-child(even) {
+    animation-delay: -5s;
 }
