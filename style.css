@@ -1,13 +1,20 @@
 /* General body styling */
 body {
     font-family: 'Arial', sans-serif;
-    background: #fff5f7; /* Light pink background */
+    background: #fff5f7;
     margin: 0;
     padding: 0;
     text-align: center;
+    overflow-x: hidden; /* Disable horizontal scrolling */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensure the body spans the full height of the viewport */
     position: relative;
-    overflow-x: hidden; /* Allow horizontal scrolling to avoid any overflow */
-    overflow-y: scroll; /* Allow vertical scrolling */
+}
+
+/* Ensure the body and HTML elements support full-page scrolling */
+html, body {
+    height: 100%;
 }
 
 /* Header styling */
@@ -16,8 +23,9 @@ body {
     padding: 20px;
     color: #861657;
     border-bottom: 4px solid #ff8fa3;
-    z-index: 2;
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 /* Subtitle styling */
@@ -26,7 +34,11 @@ body {
     color: #c7375f;
 }
 
-/* Countdown section */
+/* Countdown and love note sections */
+main {
+    flex: 1; /* Allow main content to grow and push the footer to the bottom */
+}
+
 .countdown, .love-note {
     margin: 20px auto;
     padding: 20px;
@@ -36,7 +48,6 @@ body {
     width: 90%;
     max-width: 600px;
     z-index: 2;
-    position: relative;
 }
 
 /* Timer styling */
@@ -51,80 +62,121 @@ body {
     font-size: 1.2em;
     color: #861657;
     line-height: 1.6;
+    transition: filter 0.5s ease-in-out;
+    overflow: hidden;
+}
+
+/* Blurred effect */
+.blurred {
+    filter: blur(8px);
+    pointer-events: none;
 }
 
 /* Footer styling */
 .footer {
     background: #ffccd5;
-    padding: 10px;
+    padding: 20px;
     color: #861657;
     border-top: 4px solid #ff8fa3;
     font-size: 0.9em;
+    text-align: center;
     z-index: 2;
     position: relative;
 }
 
-/* Balloon and Love Symbols Background Animation */
-@keyframes balloon-float {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-600px); }
-}
-
-@keyframes love-bubble {
-    0% { opacity: 0; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1.2); }
-    100% { opacity: 0; transform: scale(0.8); }
-}
-
-/* Adding animated balloons and hearts to the background */
-body::before, body::after {
-    z-index: 1;
-    position: absolute;
-    font-size: 3em;
-    animation: balloon-float 10s infinite ease-in-out;
-}
-
-/* Extra floating balloons */
-body::before {
-    content: "🎈";
-    top: 10%;
-    left: 20%;
-    animation-duration: 12s;
-    animation-delay: -4s;
-}
-
+/* Fix for animation overflow */
+body::before,
 body::after {
-    content: "❤️";
-    bottom: 10%;
-    right: 25%;
-    animation: love-bubble 6s infinite ease-in-out;
-    animation-delay: -2s;
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    background: none; /* Avoid blocking the scroll */
 }
 
-/* Floating Balloons */
-body .balloon {
-    position: absolute;
-    font-size: 4em;
-    animation: balloon-float 12s infinite ease-in-out;
-    z-index: 1;
+/* Birthday background animation */
+@keyframes birthdayBackground {
+    0% {
+        background-color: #fff5f7;
+    }
+    50% {
+        background-color: #ffccd5;
+    }
+    100% {
+        background-color: #fff5f7;
+    }
 }
 
-body .balloon:nth-child(1) { left: 30%; top: 15%; }
-body .balloon:nth-child(2) { left: 40%; top: 40%; }
-body .balloon:nth-child(3) { left: 60%; top: 25%; }
+@keyframes confettiAnimation {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(500px);
+        opacity: 0;
+    }
+}
 
-body .heart {
+/* Container for right-side animation */
+.right-side-animation {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;  /* Ensure it takes full height */
+    width: 30%;
+    z-index: 999;  /* Ensure it's above the header and footer */
+    pointer-events: none; /* Ensure it doesn't interfere with user interaction */
+    overflow: hidden;
+}
+
+/* Confetti animation */
+.birthday-confetti {
     position: absolute;
+    top: 0;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background-color: #ff8fa3;
+    border-radius: 50%;
+    animation: confettiAnimation 5s infinite ease-in;
+}
+
+.birthday-confetti:nth-child(even) {
+    background-color: #ffccd5;
+}
+
+.birthday-confetti:nth-child(odd) {
+    background-color: #ffe6e9;
+}
+
+/* Apply the birthday background animation */
+body {
+    animation: birthdayBackground 5s ease-in-out infinite;
+}
+
+/* Create floating birthday symbols (balloons, gifts, etc.) */
+@keyframes floatSymbols {
+    0% {
+        transform: translateX(0) translateY(0);
+    }
+    50% {
+        transform: translateX(50px) translateY(-50px);
+    }
+    100% {
+        transform: translateX(0) translateY(0);
+    }
+}
+
+.birthday-symbols {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
     font-size: 3em;
-    animation: love-bubble 10s infinite ease-in-out;
-    color: #ff4d94;
-    z-index: 1;
-}
-
-body .heart:nth-child(odd) {
-    animation-delay: -3s;
-}
-
-body .heart:nth-child(even) {
-    animation-delay: -5s;
+    animation: floatSymbols 3s ease-in-out infinite;
+    color: #ff8fa3;
+    z-index: -1;
 }
